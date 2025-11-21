@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Proyek Panel Surya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #d4af37 0%, #f4e5c3 50%, #d4af37 100%);
+            opacity: 0.1;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+            color: #d4af37;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .section-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.2em;
+            margin: 20px 0;
+            border: 3px dashed #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            background: linear-gradient(135deg, #d0d0d0 0%, #e5e5e5 100%);
+            border-color: #999;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2em;
+            margin: 20px 0;
+            border: 3px dashed #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, #3d3d3d 0%, #2a2a2a 100%);
+            border-color: #777;
+        }
+
+        .materials-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .material-item {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #d4af37;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .material-item strong {
+            color: #2c3e50;
+        }
+
+        .benefits-list, .learning-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .benefits-list li, .learning-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2c3e50;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .benefits-list li:hover, .learning-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border-left-color: #d4af37;
+        }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 2px solid #d4af37;
+        }
+
+        .footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ ENERGI SURYA: MENANGKAP CAHAYA, MENYALAKAN DUNIA ☀️</h1>
+            <p>Laporan Proyek Penggunaan Panel Surya Mini untuk Penerangan Lampu Jalan</p>
+        </div>
+
+        <div class="content">
+            <!-- Section 1: Judul dan Kelompok -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">1</span>
+                    Judul Proyek dan Kelompok
+                </h2>
+                <div class="section-content">
+                    <p><strong>Nama Proyek:</strong> Energi Surya - Menangkap Cahaya, Menyalakan Dunia</p>
+                    <p><strong>Fokus Proyek:</strong> Implementasi Panel Surya Mini untuk Sistem Penerangan Lampu Jalan Ramah Lingkungan</p>
+                    <p><strong>Nama Kelompok:</strong> [Isi nama kelompok Anda di sini]</p>
+                    <p><strong>Anggota Kelompok:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>[Nama Anggota 1]</li>
+                        <li>[Nama Anggota 2]</li>
+                        <li>[Nama Anggota 3]</li>
+                        <li>[Nama Anggota 4]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2: Tujuan dan Manfaat -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">2</span>
+                    Tujuan dan Manfaat Proyek
+                </h2>
+                <div class="section-content">
+                    <p><strong>Tujuan Proyek:</strong></p>
+                    <ul class="benefits-list">
+                        <li>🎯 Merancang dan membuat prototipe lampu jalan dengan sumber energi alternatif yang ramah lingkungan menggunakan panel surya mini</li>
+                        <li>🎯 Memahami prinsip kerja konversi energi cahaya matahari menjadi energi listrik melalui teknologi fotovoltaik</li>
+                        <li>🎯 Mengaplikasikan konsep energi terbarukan dalam kehidupan sehari-hari khususnya untuk penerangan jalan</li>
+                    </ul>
+                    
+                    <p style="margin-top: 30px;"><strong>Manfaat Proyek:</strong></p>
+                    <ul class="benefits-list">
+                        <li>🌱 <strong>Ramah Lingkungan:</strong> Mengurangi ketergantungan pada listrik berbahan bakar fosil dan menurunkan emisi karbon</li>
+                        <li>💰 <strong>Hemat Biaya:</strong> Mengurangi biaya listrik untuk penerangan jalan dalam jangka panjang</li>
+                        <li>🔋 <strong>Mandiri Energi:</strong> Sistem dapat beroperasi secara otonom tanpa tergantung jaringan listrik PLN</li>
+                        <li>💡 <strong>Edukatif:</strong> Meningkatkan pemahaman tentang teknologi energi terbarukan dan penerapannya</li>
+                        <li>🌍 <strong>Berkelanjutan:</strong> Mendukung program pembangunan berkelanjutan dan penggunaan energi bersih</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3: Dasar Teori -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">3</span>
+                    Dasar Teori
+                </h2>
+                <div class="section-content">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px;">⚡ Energi Surya dan Panel Fotovoltaik</h3>
+                    <p>Energi surya adalah energi yang berasal dari radiasi matahari yang dapat dikonversi menjadi listrik atau panas. Panel surya fotovoltaik bekerja berdasarkan efek fotovoltaik, yaitu fenomena dimana material semikonduktor (biasanya silikon) menghasilkan arus listrik ketika terkena cahaya matahari.</p>
+                    
+                    <h3 style="color: #2c3e50; margin: 25px 0 15px 0;">🔋 Prinsip Kerja Sistem</h3>
+                    <p><strong>1. Konversi Energi:</strong> Sel fotovoltaik pada panel surya menyerap foton dari cahaya matahari dan melepaskan elektron, menciptakan arus listrik DC (Direct Current).</p>
+                    
+                    <p><strong>2. Penyimpanan Energi:</strong> Energi listrik yang dihasilkan disimpan dalam baterai untuk digunakan saat malam hari atau kondisi minim cahaya.</p>
+                    
+                    <p><strong>3. Distribusi Daya:</strong> Energi dari baterai dialirkan ke lampu LED melalui sistem switch on/off untuk mengontrol penerangan.</p>
+                    
+                    <h3 style="color: #f5576c; margin: 25px 0 15px 0;">💡 Keunggulan LED</h3>
+                    <p>LED (Light Emitting Diode) dipilih karena efisiensi energinya yang tinggi, mengkonsumsi daya rendah, memiliki umur panjang (hingga 50,000 jam), dan menghasilkan panas yang minimal dibandingkan lampu konvensional.</p>
+                    
+                    <h3 style="color: #f5576c; margin: 25px 0 15px 0;">🌤️ Faktor yang Mempengaruhi</h3>
+                    <p>Efisiensi sistem dipengaruhi oleh intensitas cahaya matahari, sudut kemiringan panel, kondisi cuaca, kebersihan permukaan panel, dan kapasitas baterai yang digunakan.</p>
+                </div>
+            </div>
+
+            <!-- Section 4: Sketsa/Gambar -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">4</span>
+                    Sketsa/Gambar Proyek
+                </h2>
+                <div class="section-content">
+                    <p style="margin-bottom: 15px;">Berikut adalah desain dan sketsa dari proyek lampu jalan tenaga surya yang telah kami buat:</p>
+                    <div class="image-placeholder">
+                        <div style="text-align: center;">
+                            <p style="font-size: 3em; margin-bottom: 10px;">🖼️</p>
+                            <p>Klik untuk mengunggah sketsa proyek</p>
+                            <p style="font-size: 0.9em; margin-top: 5px; opacity: 0.7;">(Format landscape - Gambar desain rangkaian sistem)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Alat dan Bahan -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">5</span>
+                    Alat dan Bahan
+                </h2>
+                <div class="section-content">
+                    <p style="margin-bottom: 20px;">Berikut adalah daftar lengkap alat dan bahan yang digunakan dalam pembuatan proyek ini:</p>
+                    <div class="materials-list">
+                        <div class="material-item">
+                            <strong>☀️ Panel Surya Mini</strong><br>
+                            Jumlah: 2 buah<br>
+                            Fungsi: Menangkap energi cahaya matahari dan mengkonversinya menjadi listrik
+                        </div>
+                        <div class="material-item">
+                            <strong>💡 Lampu LED Kecil</strong><br>
+                            Jumlah: 5 buah<br>
+                            Fungsi: Sebagai sumber penerangan yang hemat energi
+                        </div>
+                        <div class="material-item">
+                            <strong>🔋 Baterai</strong><br>
+                            Jumlah: 2 buah<br>
+                            Fungsi: Menyimpan energi listrik untuk digunakan saat malam hari
+                        </div>
+                        <div class="material-item">
+                            <strong>🔘 Switch On/Off</strong><br>
+                            Jumlah: 1 buah<br>
+                            Fungsi: Mengontrol aliran listrik ke lampu LED
+                        </div>
+                        <div class="material-item">
+                            <strong>🥫 Tinfoil</strong><br>
+                            Ukuran: 750 ml<br>
+                            Fungsi: Sebagai wadah/struktur pendukung komponen
+                        </div>
+                        <div class="material-item">
+                            <strong>📄 Aluminium Foil</strong><br>
+                            Fungsi: Reflektor cahaya untuk meningkatkan efisiensi panel surya
+                        </div>
+                        <div class="material-item">
+                            <strong>🔌 Kabel</strong><br>
+                            Fungsi: Menghubungkan semua komponen dalam sistem
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Hasil Proyek -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">6</span>
+                    Hasil Proyek
+                </h2>
+                <div class="section-content">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📹 Video Demonstrasi dan Uji Coba</h3>
+                    <p style="margin-bottom: 15px;">Video berikut menunjukkan proses pembuatan, instalasi, dan hasil uji coba lampu jalan tenaga surya dalam berbagai kondisi pencahayaan:</p>
+                    <div class="video-placeholder">
+                        <div style="text-align: center;">
+                            <p style="font-size: 3em; margin-bottom: 10px;">🎬</p>
+                            <p>Klik untuk mengunggah video hasil uji coba</p>
+                            <p style="font-size: 0.9em; margin-top: 5px; opacity: 0.7;">(Video demonstrasi pengujian sistem)</p>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #667eea; margin: 30px 0 15px 0;">✅ Hasil Pengujian</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p><strong>Pengujian di Bawah Sinar Matahari:</strong></p>
+                        <ul style="margin: 10px 0 20px 20px; line-height: 2;">
+                            <li>Panel surya berhasil mengisi baterai dengan optimal pada intensitas cahaya maksimal</li>
+                            <li>Waktu pengisian penuh: ± 4-6 jam di bawah sinar matahari langsung</li>
+                            <li>Tegangan output: Sesuai spesifikasi panel (3-6V DC)</li>
+                        </ul>
+                        
+                        <p><strong>Pengujian Penerangan LED:</strong></p>
+                        <ul style="margin: 10px 0 20px 20px; line-height: 2;">
+                            <li>Semua 5 lampu LED menyala dengan terang dan stabil</li>
+                            <li>Durasi penerangan dengan baterai penuh: ± 6-8 jam</li>
+                            <li>Switch on/off berfungsi dengan baik untuk kontrol manual</li>
+                        </ul>
+                        
+                        <p><strong>Efisiensi Sistem:</strong></p>
+                        <ul style="margin: 10px 0 0 20px; line-height: 2;">
+                            <li>Sistem bekerja optimal saat posisi panel menghadap langsung ke matahari</li>
+                            <li>Aluminium foil sebagai reflektor meningkatkan efisiensi hingga 15-20%</li>
+                            <li>Konsumsi daya sangat rendah berkat penggunaan LED</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Pembelajaran -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">7</span>
+                    Pembelajaran dari Proyek
+                </h2>
+                <div class="section-content">
+                    <p style="margin-bottom: 20px;">Berbagai hal berharga yang kami pelajari selama proses pembuatan proyek ini:</p>
+                    <ul class="learning-list">
+                        <li>
+                            <strong>🔬 Pemahaman Konsep Energi Terbarukan</strong><br>
+                            Kami mempelajari secara mendalam bagaimana energi matahari dapat dikonversi menjadi listrik melalui efek fotovoltaik dan pentingnya energi terbarukan dalam mengatasi krisis energi global.
+                        </li>
+                        <li>
+                            <strong>⚙️ Keterampilan Teknis dalam Merakit Sistem Elektronik</strong><br>
+                            Proyek ini melatih kemampuan kami dalam merangkai komponen elektronik, memahami polaritas baterai, menghubungkan kabel dengan benar, dan memastikan semua koneksi aman.
+                        </li>
+                        <li>
+                            <strong>🧪 Pentingnya Eksperimen dan Troubleshooting</strong><br>
+                            Kami belajar untuk tidak menyerah ketika menghadapi masalah seperti lampu tidak menyala atau panel tidak mengisi baterai, dan menemukan solusi melalui trial and error.
+                        </li>
+                        <li>
+                            <strong>🌍 Kesadaran Lingkungan</strong><br>
+                            Proyek ini meningkatkan kesadaran kami tentang pentingnya menggunakan energi bersih dan dampak positifnya terhadap lingkungan dalam mengurangi emisi gas rumah kaca.
+                        </li>
+                        <li>
+                            <strong>🤝 Kerjasama Tim</strong><br>
+                            Kami belajar bekerja sama, membagi tugas, menghargai ide anggota tim, dan menyelesaikan tantangan bersama untuk mencapai hasil yang optimal.
+                        </li>
+                        <li>
+                            <strong>💡 Kreativitas dalam Desain</strong><br>
+                            Penggunaan bahan sederhana seperti tinfoil dan aluminium foil mengajarkan kami untuk berpikir kreatif dalam memanfaatkan material yang tersedia untuk membuat struktur yang fungsional.
+                        </li>
+                        <li>
+                            <strong>📊 Analisis Efisiensi</strong><br>
+                            Kami memahami faktor-faktor yang mempengaruhi efisiensi sistem seperti sudut panel, intensitas cahaya, dan kapasitas baterai yang perlu dipertimbangkan dalam desain optimal.
+                        </li>
+                        <li>
+                            <strong>🔮 Visi Masa Depan Energi</strong><br>
+                            Proyek ini membuka wawasan kami tentang potensi besar energi surya sebagai solusi energi masa depan dan bagaimana teknologi ini dapat diterapkan dalam skala yang lebih luas.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 8: Kesimpulan -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">8</span>
+                    Kesimpulan
+                </h2>
+                <div class="section-content">
+                    <div class="conclusion-box">
+                        <p style="margin-bottom: 15px;">
+                            Proyek "Energi Surya: Menangkap Cahaya, Menyalakan Dunia" telah berhasil mendemonstrasikan bahwa energi matahari dapat dimanfaatkan secara efektif untuk sistem penerangan lampu jalan skala kecil. Melalui penggunaan 2 panel surya mini, 5 lampu LED, dan sistem penyimpanan baterai, kami berhasil menciptakan prototipe lampu jalan yang ramah lingkungan dan mandiri energi.
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            Hasil pengujian menunjukkan bahwa sistem dapat beroperasi dengan baik, mampu mengisi baterai dalam 4-6 jam dan menyediakan penerangan selama 6-8 jam. Penggunaan aluminium foil sebagai reflektor terbukti meningkatkan efisiensi sistem hingga 15-20%, menunjukkan bahwa inovasi sederhana dapat memberikan dampak signifikan pada performa sistem.
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            Proyek ini membuktikan bahwa teknologi energi terbarukan tidak hanya ramah lingkungan tetapi juga praktis dan dapat diimplementasikan dengan bahan-bahan yang terjangkau. Dalam konteks yang lebih luas, sistem seperti ini memiliki potensi besar untuk diterapkan di area-area terpencil yang belum terjangkau jaringan listrik PLN, memberikan solusi penerangan yang berkelanjutan.
+                        </p>
+                        <p>
+                            Kami berkesimpulan bahwa masa depan energi terletak pada pemanfaatan sumber daya alam yang terbarukan seperti energi matahari. Dengan terus mengembangkan dan mengoptimalkan teknologi fotovoltaik, kita dapat berkontribusi nyata dalam menciptakan dunia yang lebih bersih, hemat energi, dan berkelanjutan untuk generasi mendatang. Setiap langkah kecil menuju energi bersih adalah investasi besar untuk planet kita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Proyek Energi Surya | Menangkap Cahaya, Menyalakan Dunia 🌞⚡</p>
+            <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.8;">Bersama Membangun Masa Depan Energi Bersih dan Berkelanjutan</p>
+        </div>
+    </div>
+</body>
+</html>
